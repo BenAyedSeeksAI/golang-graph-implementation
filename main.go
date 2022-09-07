@@ -2,6 +2,18 @@ package main
 
 import "fmt"
 
+func AjacencyMatrix(edges [][]int, n int) [][]int {
+	matrix := make([][]int, n)
+	for idx := range matrix {
+		matrix[idx] = make([]int, n)
+	}
+	for _, edge := range edges {
+		matrix[edge[0]][edge[1]] = 1
+		matrix[edge[1]][edge[0]] = 1
+	}
+	return matrix
+}
+
 func AdjacencyList(edges [][]int) map[int][]int {
 	graph := make(map[int][]int)
 	for _, edge := range edges {
@@ -52,10 +64,17 @@ func BreadthFirstSearch(graph map[int][]int, node int) {
 }
 func main() {
 	edges := [][]int{{0, 1}, {0, 5}, {0, 4}, {4, 2}, {2, 3}, {3, 9}}
-	size := 11
-	graph := AdjacencyList(edges)
-	visited := make([]bool, size)
-	start := 0
-	DepthFirstSearch(graph, visited, start)
-	BreadthFirstSearch(graph, 9)
+	size := 10
+	graphLst := AdjacencyList(edges)
+	graphMtx := AjacencyMatrix(edges, size)
+	fmt.Println("Adjacency List :")
+	fmt.Println(graphLst)
+	fmt.Println("Adjacency Matrix :")
+	fmt.Println(graphMtx)
+
+	// visited := make([]bool, size)
+	// start := 0
+	// DepthFirstSearch(graphLst, visited, start)
+	// BreadthFirstSearch(graphLst, 9)
+
 }
