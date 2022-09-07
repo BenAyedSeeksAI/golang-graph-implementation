@@ -2,6 +2,28 @@ package main
 
 import "fmt"
 
+func LoopThrough(graph map[int][]int, node int, visited []bool) bool {
+	if visited[node] {
+		return false
+	}
+	visited[node] = true
+	for _, neighbor := range graph[node] {
+		LoopThrough(graph, neighbor, visited)
+	}
+	return true
+}
+
+func ConnectedComponents(graph map[int][]int, size int) int {
+	visited := make([]bool, size)
+	var cnt int = 0
+	for node := range graph {
+		if LoopThrough(graph, node, visited) == true {
+			cnt++
+		}
+	}
+	return cnt
+}
+
 func AjacencyMatrix(edges [][]int, n int) [][]int {
 	matrix := make([][]int, n)
 	for idx := range matrix {
@@ -63,7 +85,7 @@ func BreadthFirstSearch(graph map[int][]int, node int) {
 	}
 }
 func main() {
-	edges := [][]int{{0, 1}, {0, 5}, {0, 4}, {4, 2}, {2, 3}, {3, 9}}
+	edges := [][]int{{0, 1}, {0, 5}, {0, 4}, {2, 6}, {6, 3}, {3, 9}}
 	size := 10
 	graphLst := AdjacencyList(edges)
 	graphMtx := AjacencyMatrix(edges, size)
@@ -71,7 +93,7 @@ func main() {
 	fmt.Println(graphLst)
 	fmt.Println("Adjacency Matrix :")
 	fmt.Println(graphMtx)
-
+	fmt.Println(ConnectedComponents(graphLst, size))
 	// visited := make([]bool, size)
 	// start := 0
 	// DepthFirstSearch(graphLst, visited, start)
