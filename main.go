@@ -84,7 +84,7 @@ func BreadthFirstSearch(graph map[int][]int, node int) {
 		}
 	}
 }
-func main() {
+func graph() {
 	edges := [][]int{{0, 1}, {0, 5}, {0, 4}, {2, 6}, {6, 3}, {3, 9}}
 	size := 10
 	graphLst := AdjacencyList(edges)
@@ -94,9 +94,12 @@ func main() {
 	fmt.Println("Adjacency Matrix :")
 	fmt.Println(graphMtx)
 	fmt.Println(ConnectedComponents(graphLst, size))
-	// visited := make([]bool, size)
-	// start := 0
-	// DepthFirstSearch(graphLst, visited, start)
-	// BreadthFirstSearch(graphLst, 9)
-
+	visited := make([]bool, size)
+	start := 0
+	DepthFirstSearch(graphLst, visited, start)
+	BreadthFirstSearch(graphLst, 9)
+}
+func main() {
+	// graph()
+	mainTree()
 }
