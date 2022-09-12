@@ -24,6 +24,21 @@ func ConnectedComponents(graph map[int][]int, size int) int {
 	return cnt
 }
 
+func hasPath(graph map[int][]int, visited []bool, source int, destination int) bool {
+	if source == destination {
+		return true
+	}
+	if visited[source] {
+		return false
+	}
+	visited[source] = true
+	for _, node := range graph[source] {
+		if hasPath(graph, visited, node, destination) {
+			return true
+		}
+	}
+	return false
+}
 func AjacencyMatrix(edges [][]int, n int) [][]int {
 	matrix := make([][]int, n)
 	for idx := range matrix {
@@ -88,18 +103,30 @@ func graph() {
 	edges := [][]int{{0, 1}, {0, 5}, {0, 4}, {2, 6}, {6, 3}, {3, 9}}
 	size := 10
 	graphLst := AdjacencyList(edges)
-	graphMtx := AjacencyMatrix(edges, size)
-	fmt.Println("Adjacency List :")
+	// graphMtx := AjacencyMatrix(edges, size)
+	// fmt.Println("Adjacency List :")
+	// fmt.Println(graphLst)
+	// fmt.Println("Adjacency Matrix :")
+	// fmt.Println(graphMtx)
+	// fmt.Println(ConnectedComponents(graphLst, size))
+	// visited := make([]bool, size)
+	// start := 0
+	// DepthFirstSearch(graphLst, visited, start)
+	// BreadthFirstSearch(graphLst, 9)
+	visited2 := make([]bool, size)
+	visited3 := make([]bool, size)
 	fmt.Println(graphLst)
-	fmt.Println("Adjacency Matrix :")
-	fmt.Println(graphMtx)
-	fmt.Println(ConnectedComponents(graphLst, size))
-	visited := make([]bool, size)
-	start := 0
-	DepthFirstSearch(graphLst, visited, start)
-	BreadthFirstSearch(graphLst, 9)
+	fmt.Println("test 1:")
+	test := hasPath(graphLst, visited2, 6, 9)
+	fmt.Println(test)
+	fmt.Println("test 2:")
+	test1 := hasPath(graphLst, visited3, 0, 9)
+	fmt.Println(test1)
+	fmt.Println("test 3:")
+	test3 := hasPath(graphLst, make([]bool, size), 0, 6)
+	fmt.Println(test3)
 }
 func main() {
-	// graph()
-	mainTree()
+	graph()
+	// mainTree()
 }
